@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.route('/top-5-recipe').get(recipeController.top5recipe, recipeController.getAllRecipe);
 
+router.get('/top-favorites', recipeController.getTopFavoriteRecipes);
+
 router.use('/:recipeId/reviews', reviewRouter);
 
 router.route('/')

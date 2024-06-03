@@ -1,1 +1,21 @@
-# Recipe-Manager-Server
+#Create a folder config and file config.env
+
+Inside config.env add the following:
+
+NODE_ENV=development
+PORT=8000
+DATABASE_LOCAL= mongodb://localhost:27017/RecipeManager
+DATABASE_PASSWORD=recipe111
+DATABASE=mongodb+srv://recipemanager:<PASSWORD>@recipemanager.x8toft8.mongodb.net/recipeManager?retryWrites=true&w=majority&appName=RecipeManager
+JWT_COOKIE_EXPIRE=90
+SECRET_KEY=dfaeregaavragsbg
+EMAIL_HOST=sandbox.smtp.mailtrap.io
+EMAIL_PORT=2525
+EMAIL_USER=32d5aad6a140f0
+EMAIL_PASSWORD=b296de7b082f38
+
+#Run The following command
+
+    npm install
+
+    npm run start:prod

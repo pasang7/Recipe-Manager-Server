@@ -109,6 +109,32 @@ exports.top5recipe = (req, res, next)=>{
     next();
 }
 
+exports.getTopFavoriteRecipes = catchAsync(async (req, res, next) => {
+    try {
+        const topFavoriteRecipes = await Recipe.aggregate([
+            { $unwind: "$favoritedBy" },  // Unwind the favoritedBy array
+            { $group: {
+                _id: "$_id",
+                title: { $first: "$title" },
+                description: { $first: "$description" },
+                featuredImgURL: { $first: "$featuredImgURL" },
+                numberOfFavorites: { $sum: 1 }  // Count the number of times each recipe is favorited
+            }},
+            { $sort: { numberOfFavorites: -1 } },  // Sort by number of favorites in descending order
+            { $limit: 10 }  // Limit to top 10 recipes
+        ]);
+
+        res.status(200).json({
+            status: 'success',
+            results: topFavoriteRecipes.length,
+            data: topFavoriteRecipes
+        });
+    } catch (err) {
+        console.error(err);
+        return next(new AppError('Error retrieving top favorite recipes', 500));
+    }
+});
+
 exports.getAllRecipe = catchAsync(async (req, res, next)=>{
     try {
         const features = new APIFeatures(Recipe.find().populate('category'), req.query)

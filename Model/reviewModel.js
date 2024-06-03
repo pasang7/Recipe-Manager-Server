@@ -34,11 +34,13 @@ const reviewSchema = new mongoose.Schema({
 
 });
 
+reviewSchema.index({recipe:1, user:1}, {unique:true});
 
 reviewSchema.statics.calcAverageRating = async function(recipeId){
+   console.log(recipeId);
     const stat = await this.aggregate([
         {
-            $match:{recipe: recipeId}
+            $match: {recipe: recipeId}
         },
         {
        $group: {
@@ -49,16 +51,14 @@ reviewSchema.statics.calcAverageRating = async function(recipeId){
         }
 
     ])
-
    await Recipe.findByIdAndUpdate(recipeId, {
         numberOfRatings:stat[0].nRating,
-        averageRating:stat[1].avgRating
+        averageRating:stat[0].avgRating
     })
 }
 
 
 reviewSchema.post('save', function(){
-
     this.constructor.calcAverageRating(this.recipe);
 })
 

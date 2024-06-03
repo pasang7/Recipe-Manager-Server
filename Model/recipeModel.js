@@ -14,7 +14,8 @@ const recipeSchema = new mongoose.Schema({
     },
 
     averageRating:{
-        type:Number
+        type:Number,
+        default:0
 
     },
 

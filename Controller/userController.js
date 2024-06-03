@@ -80,7 +80,6 @@ exports.getUserImage = catchAsync(async (req, res) => {
 });
 
 exports.updateUserSelf = catchAsync(async (req, res, next) => {
-    console.log('updateur', req.user)
     let userDetail = await User.findById(req.params.id);
 
     if (req.user.id !== userDetail.id) {

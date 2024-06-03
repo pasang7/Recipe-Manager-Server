@@ -7,12 +7,10 @@ const router = express.Router({mergeParams:true})
 
 
 router.route('/')
-.post(authController.protectRoute, reviewController.createReview);
+.post(authController.protectRoute, reviewController.createReview)
+.get(authController.protectRoute, reviewController.getReview);
 
 router.route('/:recipeId')
 .get(authController.protectRoute, reviewController.getReview)
-
-
-
 
 module.exports = router; 
